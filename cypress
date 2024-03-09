@@ -1,0 +1,35 @@
+describe('seu barriga', () =>{
+    it('verificar abertura do site e o login', () => {
+
+        cy.visit('https://seubarriga.wcaquino.me/login')
+        cy.contains('Login').should('be.visible');
+
+        cy.get('#email').should('exist');
+        cy.get('#senha').should('exist');
+
+        cy.get('#email').type('leticia_teste');
+        cy.get('#senha').type('leticia_senha');
+
+    })
+    it('verificar cadastro novo usuário', () => {
+
+        cy.visit('https://seubarriga.wcaquino.me/cadastro')
+        cy.contains('Cadastrar').should('be.visible');
+    
+        cy.get('#nome').should('exist');
+        cy.get('#email').should('exist');
+        cy.get('#senha').should('exist');
+
+        cy.get('#nome').type('teste');
+        cy.get('#email').type('leticia_teste');
+        cy.get('#senha').type('leticia_senha');
+
+    })
+    it('verificar pagina do home', () => {
+        cy.visit('https://seubarriga.wcaquino.me/')
+        
+        
+
+    })
+
+})
