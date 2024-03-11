@@ -1,4 +1,24 @@
 describe('seu barriga', () =>{
+    //cadastro
+    it('verificar cadastro novo usuário', () => {
+
+        cy.visit('https://seubarriga.wcaquino.me/cadastro')
+        cy.contains('Cadastrar').should('be.visible')
+
+        cy.get('#nome').should('exist');
+        cy.get('#email').should('exist');
+        cy.get('#senha').should('exist');
+
+        cy.get('#nome').type('teste');
+        cy.get('#email').type('email@testeleticia');
+        cy.get('#senha').type('teste_senha');
+
+        cy.contains('Cadastrar').click()
+
+    })
+
+    //login
+
     it('verificar abertura do site e o login', () => {
 
         cy.visit('https://seubarriga.wcaquino.me/login')
@@ -7,28 +27,77 @@ describe('seu barriga', () =>{
         cy.get('#email').should('exist');
         cy.get('#senha').should('exist');
 
-        cy.get('#email').type('leticia_teste');
-        cy.get('#senha').type('leticia_senha');
+        cy.get('#email').type('email@testeleticia');
+        cy.get('#senha').type('teste_senha');
 
-    })
-    it('verificar cadastro novo usuário', () => {
+        cy.contains('Entrar').click();
 
-        cy.visit('https://seubarriga.wcaquino.me/cadastro')
-        cy.contains('Cadastrar').should('be.visible');
-    
+    //home
+
+        cy.contains('Conta');
+        cy.contains('Saldo')
+        cy.get('span > a').click()
+
+        cy.contains('Conta para movimentacoes');
+        cy.contains('Conta com movimentacao');
+        cy.contains('Conta para saldo');
+        cy.contains('Conta para extrato');
+
+        cy.get('.caret').click();
+        cy.get('.dropdown-menu > :nth-child(1) > a').click();
+
+    //adicionar contas
+        cy.visit('https://seubarriga.wcaquino.me/addConta')
+
+        cy.contains('Nome');
+        cy.contains('Salvar');
+
         cy.get('#nome').should('exist');
-        cy.get('#email').should('exist');
-        cy.get('#senha').should('exist');
+        cy.get('#nome').type('conta de agua');
+        cy.contains('Salvar').click();
 
-        cy.get('#nome').type('teste');
-        cy.get('#email').type('leticia_teste');
-        cy.get('#senha').type('leticia_senha');
+    //listar contas
 
-    })
-    it('verificar pagina do home', () => {
-        cy.visit('https://seubarriga.wcaquino.me/')
-        
-        
+       cy.contains('Conta');
+       cy.contains('Ações'); 
+
+    //criar movimentações
+    cy.visit('https://seubarriga.wcaquino.me/movimentacao')
+    cy.contains('Criar Movimentação').should('be.visible');
+
+    cy.contains('Criar Movimentação').click();
+
+      cy.contains('Tipo da Movimentação');
+      cy.contains('Data da Movimentação');
+      cy.contains('Data do Pagamento');
+      cy.contains('Descrição');
+      cy.contains('Interessado');
+      cy.contains('Valor');
+      cy.contains('Conta');
+      cy.contains('Situação');
+
+      cy.get('#tipo').select('Despesa');
+      cy.get('#data_transacao').type('13/06/2013');
+      cy.get('#data_pagamento').type('13/06/2013');
+      cy.get('#descricao').type('Aniversario cachorro');
+      cy.get('#interessado').type('teste');
+      cy.get('#valor').type('500.00');
+      cy.contains('Pago').click();
+      cy.get('.btn').click();
+
+    //resumo mensal
+      cy.visit('https://seubarriga.wcaquino.me/extrato')
+      cy.contains('Resumo Mensal').should('be.visible');
+
+      cy.get('#mes').select('Junho');
+      cy.get('#ano').select('2013');
+      cy.get('.btn').click();
+
+    //sair
+      cy.contains('Sair').should('be.visible');
+      cy.contains('Sair').click();
+
+
 
     })
 
